@@ -2,15 +2,24 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./src/index.css">
     <title>Hoseki Admin</title>
 
   </head>
   <body>
-    <header>
-      <img src="./src/images/logo@3x.png" />
-    </header>
-    <h1>Hello World!</h1>
-    <p>Welcome to your Electron application v1.0.1</p>
+    <section class="nav drag" id="titleBar">
+      <img src="./src/images/logo@1x.png" />
+      <div class="btn-div">
+        <button class="alert no-drag">Click Me</button>
+        <button>Click Me</button>
+        <button>Click Me</button>
+      </div>
+    </section>
+
+    <div class="no-drag">
+      <h1>Hello Hoseki!</h1>
+      <p>Welcome to your Electron application v1.0.2</p>
+    </div>
     <script type="module" src="/src/renderer.js"></script>
   </body>
 </html>

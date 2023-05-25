@@ -1,5 +1,12 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+require('update-electron-app')();
+
+
+// App hot reload
+try {
+  require('electron-reloader')(module)
+} catch (_) {}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -7,14 +14,28 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    frame: false,
+    titleBarStyle: 'customButtonsOnHover',
+    titleBarOverlay: {
+      color: 'darkgray',
+      symbolColor: 'white',
+      height: 50,
+    },
+    trafficLightPosition: {
+      x: 20,
+      y: 8,
+    },
     width: 800,
     height: 600,
     webPreferences: {
+      sandbox: false,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  mainWindow.setWindowButtonVisibility(true);
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -36,7 +57,7 @@ app.on('ready', createWindow);
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (process.platform === 'darwin') {
     app.quit();
   }
 });
@@ -51,3 +72,4 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+

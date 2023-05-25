@@ -29,3 +29,13 @@
 import './index.css';
 
 console.log('👋 This message is being logged by "renderer.js", included via Vite');
+
+const triggerAlert = () => {
+    console.log('Hello from the menu!');
+}
+
+  const btn = document.querySelector('.alert');
+
+  btn.addEventListener('click', triggerAlert);
+
+  btn.click();
