@@ -6,7 +6,9 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        setupIcon: './src/icon/logo.ico',
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -52,8 +54,8 @@ module.exports = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'TheStanish',
-          name: 'hoseki-admin',
+          owner: 'hoseki-inc',
+          name: 'hoseki-admin-test',
         },
         prerelease: true,
       }

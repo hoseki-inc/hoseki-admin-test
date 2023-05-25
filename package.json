@@ -1,8 +1,8 @@
 {
   "name": "hoseki-admin",
   "productName": "hoseki-admin",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "1.0.1",
+  "description": "Hoseki admin app test",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
