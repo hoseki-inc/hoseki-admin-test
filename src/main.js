@@ -25,8 +25,8 @@ const createWindow = () => {
       height: 50,
     },
     trafficLightPosition: {
-      x: 20,
-      y: 8,
+      x: 735,
+      y: 5,
     },
     width: 800,
     height: 600,
