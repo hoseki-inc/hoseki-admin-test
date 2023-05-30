@@ -1,7 +1,7 @@
 {
   "name": "hoseki-admin",
   "productName": "hoseki-admin",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Hoseki admin app test",
   "main": ".vite/build/main.js",
   "scripts": {

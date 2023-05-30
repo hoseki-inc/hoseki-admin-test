@@ -1,0 +1,14 @@
+name: test-stuff
+run-name: ${{ github.actor }} is testing things
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: test
+        run: |
+          echo "testing"

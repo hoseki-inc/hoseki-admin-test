@@ -1,5 +1,5 @@
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} is doing the hokey pokey
 on: [push, fork, pull_request]
 jobs:
   check-bats-version:
