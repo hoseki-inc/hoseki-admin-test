@@ -21,11 +21,10 @@ jobs:
           TAG_NAME=$(echo "$ISSUE_TITLE" | tr -d '[:space:]')
 
           # Create a lightweight tag
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git tag -d "$TAG_NAME" || true  # Delete the tag if it already exists
           git tag "$TAG_NAME"
 
       - name: Push Tag
-        uses: ad-m/github-push-action@v0.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: ${{ steps.generate_tags.outputs.TAG_NAME }}
+        run: git push origin "$TAG_NAME"
