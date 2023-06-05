@@ -30,19 +30,16 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const github = require('@actions/github');
-            const context = github.context;
-            const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
+            const gh = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
 
-            const { owner, repo } = context.repo;
+            const { owner, repo } = gh.context.repo;
             const ref = `refs/tags/${process.env.TAG_NAME}`;
 
-            octokit.git.createRef({
+            gh.git.createRef({
               owner,
               repo,
               ref,
-              sha: process.env.GITHUB_SHA
+              sha: gh.context.sha
             });
-
 
 
