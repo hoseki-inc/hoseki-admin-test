@@ -1,4 +1,5 @@
 name: Auto Generate Tags
+run-name: ${{ github.actor }} has created an issue.
 
 on:
   issues:
