@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    
+    <title>Hoseki Admin</title>
+
+    <script type="module" crossorigin src="/assets/index-7f56c540.js"></script>
+    <link rel="stylesheet" href="/assets/index-75cddb9b.css">
+  </head>
+  <body>
+    <section class="nav drag" id="titleBar">
+      <img src="data:image/png;base64,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" />
+      <div class="btn-div">
+        <button class="alert no-drag">Notification</button>
+
+        <button class="no-drag">Click Me</button>
+      </div>
+    </section>
+
+    Title: <input id="title" />
+    <button class="no-drag" id="btn">Set</button>
+    <button id="btn2">Open a File</button>
+    File path: <strong id="filePath"></strong>
+
+
+    <div class="no-drag">
+      <h1 class="main-msg">Hello Hoseki!</h1>
+      <p>Welcome to your Electron application v1.0.6</p>
+      <p>Testing again again again</p>
+    </div>
+
+    <div class="table">
+      <div class="heading">
+        <div class="cell">Name</div>
+        <div class="cell">Age</div>
+        <div class="cell">Job</div>
+      </div>
+      <div class="row">
+        <div class="cell">Tyler</div>
+        <div class="cell">31</div>
+        <div class="cell">Autism</div>
+      </div>
+      <div class="row">
+        <div class="cell">Ricky</div>
+        <div class="cell">31</div>
+        <div class="cell">Gay</div>
+      </div>
+      <div class="row">
+        <div class="cell">Danilo</div>
+        <div class="cell">33</div>
+        <div class="cell">SUPER Gay</div>
+      </div>
+      <div class="row">
+        <div class="cell">Sam</div>
+        <div class="cell">31</div>
+        <div class="cell">Based</div>
+      </div>
+    </div>
+
+    
+  </body>
+</html>

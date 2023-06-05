@@ -31,3 +31,37 @@ button.alert {
   justify-content: right;
   align-self: end;
 }
+
+.table {
+  display: table;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.heading {
+  display: table-row;
+  font-weight: 500;
+  background-color: darkslateblue;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.55rem;
+}
+
+.row {
+  color: white;
+  display: table-row;
+  background-color: darkgray;
+  padding: 1rem;
+  border-radius: 0.55rem;
+}
+
+.cell {
+  display: table-cell;
+  padding: 1rem;
+  border: 1px solid black;
+
+}

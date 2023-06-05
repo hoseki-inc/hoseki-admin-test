@@ -50,15 +50,23 @@ module.exports = {
     },
   ],
   publishers: [
+    // {
+    //   name: '@electron-forge/publisher-github',
+    //   config: {
+    //     repository: {
+    //       owner: 'hoseki-inc',
+    //       name: 'hoseki-admin-test',
+    //     },
+    //     prerelease: true,
+    //   },
     {
-      name: '@electron-forge/publisher-github',
+      name: '@electron-forge/publisher-s3',
       config: {
-        repository: {
-          owner: 'hoseki-inc',
-          name: 'hoseki-admin-test',
-        },
-        prerelease: true,
-      }
+        bucket: 'hoseki-admin-test-1',
+        region: 'us-east-2',
+        public: false,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      },
     }
   ]
 };

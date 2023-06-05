@@ -1,14 +1,25 @@
-name: test-stuff
-run-name: ${{ github.actor }} is testing things
+name: Test on Push
+
 on:
   push:
     branches:
-      - master
+      - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: test
-        run: |
-          echo "testing"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test

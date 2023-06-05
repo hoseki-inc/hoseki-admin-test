@@ -28,14 +28,49 @@
 
 import './index.css';
 
+
+// const path = require('path');
+
 console.log('👋 This message is being logged by "renderer.js", included via Vite');
 
-const triggerAlert = () => {
-    console.log('Hello from the menu!');
-}
+// const triggerAlert = () => {
+//     alert('Danilo brushes his teeth with anchovy paste and hotdog water!');
+// }
 
-  const btn = document.querySelector('.alert');
+const setButton = document.getElementById('btn')
+const titleInput = document.getElementById('title')
+setButton.addEventListener('click', () => {
+  const title = titleInput.value
+  window.electronAPI.setTitle(title)
+})
 
-  btn.addEventListener('click', triggerAlert);
+const btn2 = document.getElementById('btn2');
+const filePathElement = document.getElementById('filePath');
 
-  btn.click();
+btn2.addEventListener('click', async () => {
+  const filePath = await window.electronAPI.openFile();
+  filePathElement.innerText = filePath;
+});
+
+// const NOTIFICATION_TITLE = 'Title'
+// const NOTIFICATION_BODY =
+//   'Notification from the Renderer process. Click to log to console.'
+// const CLICK_MESSAGE = 'Notification clicked'
+
+// new Notification(
+//   NOTIFICATION_TITLE,
+//   {
+//     body: NOTIFICATION_BODY,
+//     icon: path.join(__dirname, './icon/logo.ico')
+//    }).onclick =
+//   () => console.log(CLICK_MESSAGE)
+
+
+const btn = document.querySelector('.alert');
+
+btn.addEventListener('click', function(e) {
+  window.electronAPI.customNotification();
+});
+
+
+
