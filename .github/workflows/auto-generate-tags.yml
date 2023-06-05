@@ -27,19 +27,10 @@ jobs:
           git tag "$TAG_NAME"
 
       - name: Push Tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const gh = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
+        run: |
+          # Set the repository and branch
+          REPO_NAME=$(basename "$GITHUB_REPOSITORY")
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
 
-            const { owner, repo } = gh.context.repo;
-            const ref = `refs/tags/${process.env.TAG_NAME}`;
-
-            gh.git.createRef({
-              owner,
-              repo,
-              ref,
-              sha: gh.context.sha
-            });
-
-
+          # Push the tag to the repository
+          git push "https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY" "$TAG_NAME"
