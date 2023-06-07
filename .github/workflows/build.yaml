@@ -34,9 +34,7 @@ jobs:
         uses: actions/glob@v2
         with:
           patterns: |
-            ./out/make/*
-          exclude-patterns: |
-            ./out/make/*.zip
+            ../../out/make/*
 
       - name: Create Release
         id: create_release
