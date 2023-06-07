@@ -33,7 +33,8 @@ jobs:
         id: find_latest_asset
         run: |
           latest_file=$(ls -t ./out/make/* | head -n1)
-          echo "::set-output name=asset_path::${latest_file#./}"
+          asset_path=$(realpath --relative-to=./ "$latest_file")
+          echo "::set-output name=asset_path::$asset_path"
 
       - name: Create Release
         id: create_release
