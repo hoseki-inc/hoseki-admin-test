@@ -74,8 +74,8 @@ const ctxTemplate = [
         submenu: [
             {
                 label: 'Stinky Ricky',
-                click: () => {
-                    alert('Caca frita!');
+                click: async () => {
+                    console.log('Caca frita!');
                 }
             }
         ]

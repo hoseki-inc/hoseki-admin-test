@@ -27,6 +27,10 @@ const customNotification = () => {
   notification.show();
 }
 
+const context = () => {
+  ctxMenu.popup();
+}
+
 // App hot reload
 try {
   require('electron-reloader')(module)
@@ -93,10 +97,8 @@ const createWindow = () => {
   Menu.setApplicationMenu(mainMenu);
 
   mainWindow.webContents.on('context-menu', (e) => {
-    e.preventDefault();
-    ctxMenu.popup({
-      window: mainWindow
-      });
+      e.preventDefault();
+      context();
     }
   );
 
@@ -125,9 +127,7 @@ app.on('ready', () => {
   ipcMain.on('set-title', handleSetTitle);
   ipcMain.handle('dialog:openFile', handleFileOpen);
   ipcMain.handle('custom-notification', customNotification);
-  ipcMain.handle('ctx-alert', () => {
-    console.log('ctx-alert');
-  });
+  ipcMain.handle('ctx-alert', context);
   // ipcMain.handle('show-notification', showNotification);
   const appIcon = new Tray('/Users/bear/projects/electron-test/hoseki-admin/src/images/logo@3x.png');
   createWindow();
@@ -135,7 +135,7 @@ app.on('ready', () => {
 
   console.log(appIcon, mainWindow);
 
-})
+});
 
 
 // Quit when all windows are closed, except on macOS. There, it's common
