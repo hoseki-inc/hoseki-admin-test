@@ -33,7 +33,7 @@ jobs:
         id: find_latest_asset
         run: |
           latest_file=$(ls -t ../../out/make/* | head -n1)
-          echo "::set-output name=asset_paths::$latest_file"
+          echo "::set-output name=asset_path::$latest_file"
 
       - name: Create Release
         id: create_release
@@ -46,13 +46,37 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Assets
-        id: upload_assets
-        uses: actions/upload-release-asset@v1
+      - name: Upload Release Asset
+        id: upload_asset
+        run: |
+          asset_path=${{ steps.find_latest_asset.outputs.asset_path }}
+          asset_name=hoseki-admin.zip
+          asset_content_type=application/zip
+
+          echo "Uploading asset: $asset_path"
+
+          upload_url=$(curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: $(file -b --mime-type $asset_path)" \
+            --upload-file $asset_path \
+            "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}/assets?name=$asset_name" \
+            | jq -r '.upload_url')
+
+          echo "::set-output name=upload_url::$upload_url"
+
+      - name: Publish Release
+        id: publish_release
+        uses: actions/github-script@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_paths: ${{ steps.find_latest_asset.outputs.asset_paths }}
-          asset_name: hoseki-admin.zip
-          asset_content_type: application/zip
+          script: |
+            const github = require('@actions/github');
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+
+            octokit.repos.updateRelease({
+              owner: github.context.repo.owner,
+              repo: github.context.repo.repo,
+              release_id: ${{ steps.create_release.outputs.id }},
+              draft: false
+            });
