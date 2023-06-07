@@ -1,10 +1,10 @@
 name: Build and Release
-run-name: ${{github.actor}} has built and released a new version of ${{github.repository}}
+run-name: ${{github.actor}} is building and releasing the latest version
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build_and_release:
@@ -29,6 +29,15 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Find latest asset
+        id: find_latest_asset
+        uses: actions/glob@v2
+        with:
+          patterns: |
+            ./out/make/*
+          exclude-patterns: |
+            ./out/make/*.zip
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -47,6 +56,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/my-project.zip
-          asset_name: my-project.zip
+          asset_path: ${{ steps.find_latest_asset.outputs.files }}
+          asset_name: hoseki-admin.zip
           asset_content_type: application/zip
