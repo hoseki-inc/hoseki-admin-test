@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '14'
 
       - name: Install dependencies
         run: npm ci
@@ -27,12 +27,15 @@ jobs:
         run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
       - name: Build project
-        run: npm run build
+        run: npm run make
+
+      - name: Create out/make directory
+        run: mkdir -p out/make
 
       - name: Find latest asset
         id: find_latest_asset
         run: |
-          latest_file=$(ls -t ../../out/make/* | head -n1)
+          latest_file=$(ls -t out/make/* | head -n1)
           asset_path=$(realpath --relative-to=./ "$latest_file")
           echo "::set-output name=asset_path::$asset_path"
 
