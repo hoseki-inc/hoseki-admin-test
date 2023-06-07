@@ -1,7 +1,7 @@
 {
   "name": "hoseki-admin",
   "productName": "hoseki-admin",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Hoseki admin app test",
   "main": ".vite/build/main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "build" : "vite build",
+    "build": "vite build",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
@@ -32,6 +32,7 @@
     "@electron-forge/publisher-github": "^6.1.1",
     "@electron-forge/publisher-s3": "^6.1.1",
     "electron-squirrel-startup": "^1.0.0",
+    "node": "^20.2.0",
     "update-electron-app": "^2.0.1"
   },
   "repository": {
