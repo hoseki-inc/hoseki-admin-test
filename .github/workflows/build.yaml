@@ -1,5 +1,5 @@
 name: Build and Release
-run-name: ${{github.actor}} is building and releasing the latest version
+run-name: ${{ github.actor }} is building and releasing the latest version
 
 on:
   push:
@@ -31,10 +31,9 @@ jobs:
 
       - name: Find latest asset
         id: find_latest_asset
-        uses: actions/glob@v2
-        with:
-          patterns: |
-            ../../out/make/*
+        run: |
+          latest_file=$(ls -t ../../out/make/* | head -n1)
+          echo "::set-output name=files::$latest_file"
 
       - name: Create Release
         id: create_release
