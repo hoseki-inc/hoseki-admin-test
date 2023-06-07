@@ -33,7 +33,7 @@ jobs:
         id: find_latest_asset
         run: |
           latest_file=$(ls -t ../../out/make/* | head -n1)
-          echo "::set-output name=asset_path::$latest_file"
+          echo "::set-output name=asset_paths::$latest_file"
 
       - name: Create Release
         id: create_release
@@ -53,6 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.find_latest_asset.outputs.asset_path }}
+          asset_paths: ${{ steps.find_latest_asset.outputs.asset_paths }}
           asset_name: hoseki-admin.zip
           asset_content_type: application/zip
