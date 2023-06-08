@@ -37,7 +37,7 @@ jobs:
       - name: Find latest asset
         id: find_latest_asset
         run: |
-          asset_path=$(pwd)/out/make/*.zip
+          asset_path=$(find out/make -name "*.zip" -type f -printf "%T@ %p\n" | sort -k1nr | head -n1 | awk '{print $2}')
           echo "::set-output name=asset_path::$asset_path"
 
       - name: Create Release
