@@ -1,7 +1,6 @@
 name: Build and Release
 run-name: ${{ github.actor }} is building and releasing the latest version
 
-
 on:
   push:
     branches:
@@ -20,6 +19,9 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
         env:
           NODE_ENV: development
@@ -30,12 +32,12 @@ jobs:
         run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
       - name: Build project
-        run: npm run make
+        run: npm run build
 
       - name: Find latest asset
         id: find_latest_asset
         run: |
-          asset_path=$(ls -t ./out/make/*.*.*.zip | head -n1)
+          asset_path=$(pwd)/out/make/*.*.*.zip
           echo "::set-output name=asset_path::$asset_path"
 
       - name: Create Release
@@ -50,29 +52,15 @@ jobs:
           prerelease: false
 
       - name: Upload Release Asset
-        uses: actions/github-script@v4
+        id: upload_asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            const assetPath = '${{ steps.find_latest_asset.outputs.asset_path }}';
-            const assetName = 'hoseki-admin.zip';
-            const assetContentType = 'application/zip';
-            const octokit = github.getOctokit('${{ secrets.GITHUB_TOKEN }}');
-            const releaseId = '${{ steps.create_release.outputs.id }}';
-
-            const uploadUrl = `https://uploads.github.com/repos/${{ github.repository }}/releases/${releaseId}/assets?name=${encodeURIComponent(assetName)}`;
-            const assetData = fs.readFileSync(path.resolve(assetPath));
-            await octokit.request(uploadUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': assetContentType,
-                'Content-Length': assetData.length,
-              },
-              data: assetData,
-            });
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.find_latest_asset.outputs.asset_path }}
+          asset_name: hoseki-admin.zip
+          asset_content_type: application/zip
 
       - name: Publish Release
         run: |
