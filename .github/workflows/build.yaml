@@ -29,10 +29,7 @@ jobs:
         run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
       - name: Build project
-        run: npm run make
-
-      - name: Create out/make directory
-        run: mkdir -p out/make
+        run: npm run build
 
       - name: Find latest asset
         id: find_latest_asset
