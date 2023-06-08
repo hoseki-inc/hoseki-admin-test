@@ -31,48 +31,26 @@ jobs:
         id: get_version
         run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
-      - name: Build project
-        run: npm run build
+      - name: Build Project
+        run: npm run make
 
-      - name: Find latest asset
-        id: find_latest_asset
-        run: |
-          asset_path=$(ls -t ./out/make/*.zip | head -n1)
-          if [ -f "$asset_path" ]; then
-            echo "::set-output name=asset_path::$asset_path"
-          else
-            echo "No asset found"
-            exit 1
-          fi
-
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
         with:
+          name: built-files
+          path: ${{ github.workspace }}/out/make/*.zip
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ github.workspace }}/out/make/*.zip
           tag_name: v${{ steps.get_version.outputs.version }}
-          release_name: Release ${{ steps.get_version.outputs.version }}
+          body: |
+            Release v${{ steps.get_version.outputs.version }}
+
+            This release includes the following changes:
+            - Caca
+            - Pipi
+
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset
-        id: upload_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/${{ steps.find_latest_asset.outputs.asset_path }}
-          asset_name: hoseki-admin.zip
-          asset_content_type: application/zip
-
-      - name: Publish Release
-        run: |
-          curl \
-            -X PATCH \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            -d '{"draft": false}'
