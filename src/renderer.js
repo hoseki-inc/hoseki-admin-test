@@ -72,6 +72,49 @@ btn.addEventListener('click', function(e) {
   window.electronAPI.customNotification();
 });
 
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
 
+  /** @type {HTMLElement} */
+  const el = e.target;
+
+  const table = el?.closest('.table');
+
+  console.log({table});
+
+  if(table) {
+
+    /**
+     * @type {HTMLElement}
+     */
+    const row = el?.closest('.row');
+
+    if (row) {
+
+      console.log({
+
+        name: row.getAttribute('name'),
+        age: row.getAttribute('age'),
+        job: row.getAttribute('job'),
+      });
+
+      window.electronAPI.headingMenu({
+        name: row.getAttribute('name'),
+        age: row.getAttribute('age'),
+        job: row.getAttribute('job'),
+      });
+    }
+  }
+});
+
+window.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+
+  if(e.target.id === 'name') {
+      window.electronAPI.nameMenu({
+          name : true
+      });
+  }
+});
 
 

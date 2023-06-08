@@ -1,6 +1,6 @@
 const electron = require('electron');
 const { app, BrowserWindow, ipcMain, dialog, Notification, Menu, Tray } = electron;
-const { mainMenu, ctxMenu } = require('/Users/bear/projects/electron-test/hoseki-admin/src/menus');
+const { mainMenu, ctxMenu, template, ctxTemplate } = require('/Users/bear/projects/electron-test/hoseki-admin/src/menus');
 const path = require('path');
 require('update-electron-app')();
 
@@ -27,8 +27,34 @@ const customNotification = () => {
   notification.show();
 }
 
-const context = () => {
-  ctxMenu.popup();
+const handleHeadingMenu = ({pinga}) => {
+
+  if(pinga) {
+    const menu = Menu.buildFromTemplate([
+      ...ctxTemplate,
+      {
+        label: 'Heading',
+      }
+    ]);
+
+    menu.popup();
+  }
+
+}
+
+const handleNameMenu = ({name}) => {
+  if(name) {
+
+    const menu = Menu.buildFromTemplate([
+      ...ctxTemplate,
+      {
+        label: 'Name',
+      }
+    ]);
+
+    menu.popup();
+  }
+
 }
 
 // App hot reload
@@ -96,13 +122,6 @@ const createWindow = () => {
 
   Menu.setApplicationMenu(mainMenu);
 
-  mainWindow.webContents.on('context-menu', (e) => {
-      e.preventDefault();
-      context();
-    }
-  );
-
-
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -127,13 +146,20 @@ app.on('ready', () => {
   ipcMain.on('set-title', handleSetTitle);
   ipcMain.handle('dialog:openFile', handleFileOpen);
   ipcMain.handle('custom-notification', customNotification);
-  ipcMain.handle('ctx-alert', context);
+  ipcMain.handle('heading-menu', (event, ...args) => {
+    event.preventDefault();
+    handleHeadingMenu(...args);
+  });
+  ipcMain.handle('name-menu', (event, ...args) => {
+    event.preventDefault();
+    handleNameMenu(...args);
+  });
   // ipcMain.handle('show-notification', showNotification);
   const appIcon = new Tray('/Users/bear/projects/electron-test/hoseki-admin/src/images/logo@3x.png');
   createWindow();
   showNotification();
 
-  console.log(appIcon, mainWindow);
+
 
 });
 

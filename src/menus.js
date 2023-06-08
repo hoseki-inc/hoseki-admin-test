@@ -95,5 +95,7 @@ const ctxMenu = Menu.buildFromTemplate(ctxTemplate);
 
 module.exports = {
     mainMenu,
-    ctxMenu
+    ctxMenu,
+    ctxTemplate,
+    template
 }
