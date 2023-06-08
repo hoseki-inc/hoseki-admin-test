@@ -37,7 +37,7 @@ jobs:
       - name: Find latest asset
         id: find_latest_asset
         run: |
-          asset_path=$(ls -t "${{ github.workspace }}/out/make/*.*.*.zip" | head -n1)
+          asset_path=$(ls -t "${{ github.workspace }}/out/make/*.zip" | head -n1)
           echo "::set-output name=asset_path::$asset_path"
 
       - name: Create Release
