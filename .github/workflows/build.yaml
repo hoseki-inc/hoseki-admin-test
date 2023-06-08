@@ -38,7 +38,8 @@ jobs:
         id: find_latest_asset
         run: |
           asset_path=$(find out/make -name "*.zip" -type f -printf "%T@ %p\n" | sort -k1nr | head -n1 | awk '{print $2}')
-          echo "::set-output name=asset_path::$asset_path"
+          echo "asset_path=$asset_path" >> $GITHUB_ENV
+
 
       - name: Create Release
         id: create_release
@@ -56,9 +57,10 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ASSET_PATH: ${{ env.asset_path }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.find_latest_asset.outputs.asset_path }}
+          asset_path: ${{ env.ASSET_PATH }}
           asset_name: hoseki-admin.zip
           asset_content_type: application/zip
 
