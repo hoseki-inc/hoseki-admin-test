@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./src/index.css">
+    <link rel="stylesheet" href="./css/main.css">
     <title>Hoseki Admin</title>
 
   </head>
@@ -16,45 +16,41 @@
       </div>
     </section>
 
-    Title: <input id="title" />
-    <button class="no-drag" id="btn">Set</button>
-    <button id="btn2">Open a File</button>
-    File path: <strong id="filePath"></strong>
+
 
 
     <div class="no-drag">
       <h1 class="main-msg">Hello Hoseki! Meh</h1>
-      <p>Welcome to your Electron application v1.4.3</p>
+      <p>Welcome to your Electron application v1.4.6</p>
       <p id="p1">First paragraph</p>
       <p id="p2">Second paragraph</p>
       <p id="p3">Third paragraph</p>
     </div>
+
+    <div class="button-container">
+      <button id="openDialogButton">
+        Enter your info.
+      </button>
+    </div>
+
+    <dialog id="infoDialog">
+      <div class="input-container">
+        <input id="nameInput" type="text" placeholder="Enter your name" />
+        <input id="ageInput" type="text" placeholder="Enter your age" />
+        <input id="jobInput" type="text" placeholder="Enter your job" />
+      </div>
+      <div class="dialog-button-container">
+        <button id="okButton" type="submit">
+          OK
+        </button>
+      </div>
+    </dialog>
 
     <div class="table jobs">
       <div class="heading">
         <div class="cell">Name</div>
         <div class="cell">Age</div>
         <div class="cell">Job</div>
-      </div>
-      <div class="row" name="Tyler" age="31" job="Autism">
-        <div id="name" class="cell">Tyler</div>
-        <div class="cell">31</div>
-        <div class="cell">Autism</div>
-      </div>
-      <div class="row">
-        <div class="cell">Ricky</div>
-        <div class="cell">31</div>
-        <div class="cell">Gay</div>
-      </div>
-      <div class="row">
-        <div class="cell">Danilo</div>
-        <div class="cell">33</div>
-        <div class="cell">SUPER Gay</div>
-      </div>
-      <div class="row">
-        <div class="cell">Sam</div>
-        <div class="cell">31</div>
-        <div class="cell">Based</div>
       </div>
     </div>
 

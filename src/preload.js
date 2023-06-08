@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   customNotification: () => ipcRenderer.invoke('custom-notification'),
   headingMenu: (data) => ipcRenderer.invoke('heading-menu', data),
   nameMenu: (data) => ipcRenderer.invoke('name-menu', data),
+  contextMenu: () => ipcRenderer.invoke('context-menu'),
 })
 
 

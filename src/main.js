@@ -57,6 +57,11 @@ const handleNameMenu = ({name}) => {
 
 }
 
+const handleContextMenu = () => {
+  const menu = Menu.buildFromTemplate(ctxTemplate);
+  menu.popup();
+}
+
 // App hot reload
 try {
   require('electron-reloader')(module)
@@ -153,6 +158,10 @@ app.on('ready', () => {
   ipcMain.handle('name-menu', (event, ...args) => {
     event.preventDefault();
     handleNameMenu(...args);
+  });
+  ipcMain.handle('context-menu', (event, ...args) => {
+    event.preventDefault();
+    handleContextMenu(...args);
   });
   // ipcMain.handle('show-notification', showNotification);
   const appIcon = new Tray('/Users/bear/projects/electron-test/hoseki-admin/src/images/logo@3x.png');
