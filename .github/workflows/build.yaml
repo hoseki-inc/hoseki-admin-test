@@ -62,6 +62,7 @@ jobs:
           asset_name: hoseki-admin.zip
           asset_content_type: application/zip
 
+
       - name: Publish Release
         run: |
           curl \
